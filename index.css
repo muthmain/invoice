@@ -1,64 +1,79 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #e0f7fa; /* Light cyan background for contrast */
 }
 
 .container {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #black;
+    background-color: #ffffff; /* White background for the container */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Softer shadow for a modern look */
 }
 
-h1 {
+header {
     text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #00796b; /* Teal color for the title */
 }
 
 fieldset {
-    border: none;
-    margin: 10px 0;
-    padding: 0;
+    border: 1px solid #00796b; /* Teal border for fieldsets */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #e0f2f1; /* Light teal background for fieldsets */
 }
 
 legend {
+    font-size: 1.25rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    color: #004d40; /* Darker teal for legend text */
+    padding-bottom: 10px;
+    border-bottom: 2px solid #004d40; /* Darker teal border under legend */
 }
 
-label {
+.label {
     display: block;
-    margin: 5px 0;
+    font-weight: bold;
+    color: #00796b; /* Teal color for labels */
+    margin-bottom: 5px;
 }
 
 input[type="text"],
 input[type="number"],
 input[type="date"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #00796b; /* Teal border for input fields */
     border-radius: 4px;
+    box-sizing: border-box;
 }
 
 button {
     display: block;
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 12px;
+    background-color: #00796b; /* Teal button background */
     border: none;
-    color: #fff;
-    font-size: 16px;
+    color: #ffffff;
+    font-size: 1.125rem;
     cursor: pointer;
     border-radius: 4px;
-    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #004d40; /* Darker teal on hover */
+    transform: scale(1.02); /* Slight zoom effect on hover */
 }
 
 #invoice-output {
@@ -68,22 +83,34 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #00796b; /* Teal border for table */
 }
 
 th, td {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
 }
 
 th {
-    background-color: #f4f4f4;
+    background-color: #004d40; /* Dark teal for table header */
+    color: #ffffff; /* White text in table header */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #b2dfdb; /* Light teal for alternating table rows */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* White background for odd rows */
 }
 
 .totals {
-    margin-top: 10px;
+    margin-top: 15px;
+    font-size: 1.25rem;
     font-weight: bold;
+    color: #00796b; /* Teal color for totals */
 }
