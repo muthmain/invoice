@@ -20,21 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         ];
 
-        let total = 0;
+        let totalUSD = 0;
         let itemsHtml = '';
 
         items.forEach(item => {
-            const itemTotal = item.quantity * item.unitPrice;
-            total += itemTotal;
+            const itemTotalUSD = item.quantity * item.unitPrice;
+            totalUSD += itemTotalUSD;
             itemsHtml += `
                 <tr>
                     <td>${item.description}</td>
-                    <td>${item.quantity}</td>
+                    <td>${item.quantity.toFixed(2)}</td>
                     <td>${item.unitPrice.toFixed(2)}</td>
-                    <td>${itemTotal.toFixed(2)}</td>
+                    <td>${itemTotalUSD.toFixed(2)}</td>
                 </tr>
             `;
         });
+
+        // Conversion rate from USD to INR (example rate: 1 USD = 83 INR)
+        const conversionRate = 83;
+        const totalINR = totalUSD * conversionRate;
 
         document.getElementById('invoice-output').innerHTML = `
             <h2>Invoice</h2>
@@ -47,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <th>Description</th>
                         <th>Quantity</th>
                         <th>Unit Price</th>
-                        <th>Total</th>
+                        <th>Total (USD)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tbody>
             </table>
             <div class="totals">
-                <strong>Total Amount: $${total.toFixed(2)}</strong>
+                <strong>Total Amount (USD): $${totalUSD.toFixed(2)}</strong><br>
+                <strong>Total Amount (INR): ₹${totalINR.toFixed(2)}</strong>
             </div>
         `;
     });
