@@ -1,0 +1,125 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f8e9; /* Very light green for a refreshing background */
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* Clean white background for the container */
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow for a modern look */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #004d40; /* Dark teal color for the title */
+    margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset {
+    border: 2px solid #004d40; /* Dark teal border for fieldsets */
+    border-radius: 10px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #e8f5e9; /* Light green background for fieldsets */
+}
+
+legend {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #004d40; /* Darker teal for legend text */
+    padding-bottom: 12px;
+    border-bottom: 2px solid #004d40; /* Dark teal border under legend */
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: #00796b; /* Teal color for labels */
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border: 1px solid #00796b; /* Teal border for input fields */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: #00796b; /* Teal button background */
+    border: none;
+    color: #ffffff;
+    font-size: 1.125rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #004d40; /* Darker teal on hover */
+    transform: scale(1.03); /* Slight zoom effect on hover */
+}
+
+#invoice-output {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 2px solid #00796b; /* Teal border for table */
+}
+
+th, td {
+    padding: 14px;
+    text-align: left;
+}
+
+th {
+    background-color: #004d40; /* Dark teal for table header */
+    color: #ffffff; /* White text in table header */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #b9fbc0; /* Light green for alternating table rows */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* White background for odd rows */
+}
+
+.totals {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #004d40; /* Dark teal color for totals */
+}
