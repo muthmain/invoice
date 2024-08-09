@@ -3,61 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Generator</title>
-    <link rel="stylesheet" href="index.css">
-    <script src="index.js"></script>
-    
+    <title>Turf Invoice Generator</title>
+    <style>
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f4ef; /* Light nude background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Invoice Container */
+        .invoice-container {
+            max-width: 100%;
+            width: 900px;
+            padding: 30px;
+            background-color: #ffffff; /* White background for invoice */
+            border: 1px solid #e0d4c9; /* Light nude border */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        /* Header */
+        .invoice-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 2px solid #d6a4a4; /* Light nude border */
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .invoice-header .title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #d6a4a4; /* Light nude color */
+        }
+        .invoice-header p {
+            margin: 5px 0;
+        }
+
+        /* Customer Info and Turf Details */
+        .customer-info, .turf-details, .admin-info {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff; /* White background for tables */
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #e0d4c9; /* Light nude border */
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f7f0eb; /* Very light nude background for headers */
+            color: #333;
+        }
+        input.form-input {
+            border: 1px solid #e0d4c9; /* Light nude border */
+            border-radius: 5px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input[readonly] {
+            background-color: #f5f3f1; /* Very light nude background */
+        }
+
+        /* Buttons */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-primary {
+            background-color: #d6a4a4; /* Light nude color */
+            color: #fff;
+        }
+        .btn-secondary {
+            background-color: #c2b9a0; /* Slightly darker nude color */
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background-color: #b78a8a; /* Slightly darker nude for hover */
+        }
+        .btn-secondary:hover {
+            background-color: #a89f8a; /* Slightly darker nude for hover */
+        }
+
+        /* Total Section */
+        .invoice-total {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .invoice-container {
+                padding: 20px;
+                margin: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .invoice-container {
+                padding: 15px;
+                margin: 5px;
+            }
+            .invoice-header .title {
+                font-size: 24px;
+            }
+            .btn {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Invoice Generator</h1>
-        </header>
-        <form id="invoice-form">
-            <fieldset>
-                <legend>Invoice Details</legend>
-                <label for="invoice_number">Invoice Number:</label>
-                <input type="text" id="invoice_number" required>
-
-                <label for="invoice_date">Invoice Date:</label>
-                <input type="date" id="invoice_date" required>
-
-                <label for="customer_name">Customer Name:</label>
-                <input type="text" id="customer_name" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>Items</legend>
-                <div class="item">
-                    <h3>Item 1</h3>
-                    <label for="item1_description">Description:</label>
-                    <input type="text" id="item1_description" required>
-
-                    <label for="item1_quantity">Quantity:</label>
-                    <input type="number" id="item1_quantity" step="0.01" required>
-
-                    <label for="item1_unit_price">Unit Price:</label>
-                    <input type="number" id="item1_unit_price" step="0.01" required>
-                </div>
-
-                <div class="item">
-                    <h3>Item 2</h3>
-                    <label for="item2_description">Description:</label>
-                    <input type="text" id="item2_description" required>
-
-                    <label for="item2_quantity">Quantity:</label>
-                    <input type="number" id="item2_quantity" step="0.01" required>
-
-                    <label for="item2_unit_price">Unit Price:</label>
-                    <input type="number" id="item2_unit_price" step="0.01" required>
-                </div>
-            </fieldset>
-
-            <button type="submit">Generate Invoice</button>
-        </form>
-
-        <div id="invoice-output"></div>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h1 class="title">Turf Invoice</h1>
+            <p class="date">Date: August 8, 2024</p>
+            <p class="invoice-number">Invoice Number: #001</p>
+        </div>
+        <div class="customer-info">
+            <h2>Customer Details</h2>
+            <table>
+                <tr>
+                    <th>Name:</th>
+                    <td><input type="text" id="customer-name" value="muthmain banu" readonly class="form-input"></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td><input type="email" id="customer-email" value="muthmain@example.com" readonly class="form-input"></td>
+                </tr>
+                <tr>
+                    <th>Phone:</th>
+                    <td><input type="tel" id="customer-phone" value="1234567890" readonly class="form-input"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="turf-details">
+            <h2>Turf Details</h2>
+            <table>
+                <tr>
+                    <th>Time:</th>
+                    <td><input type="time" id="turf-time" placeholder="Enter the time you want to get the turf" class="form-input"></td>
+                </tr>
+                <tr>
+                    <th>Hours:</th>
+                    <td><input type="number" id="turf-hours" placeholder="Enter the number of hours you'll be there" class="form-input"></td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td><input type="text" id="turf-location" placeholder="Enter the location of the turf" class="form-input"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="admin-info">
+            <h2>Admin Information</h2>
+            <table>
+                <tr>
+                    <th>Turf Cost per Hour:</th>
+                    <td><input type="number" id="turf-cost-per-hour" placeholder="Enter the cost per hour" class="form-input"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="invoice-items">
+            <h2>Invoice Items</h2>
+            <table id="invoice-items-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Invoice items will be generated dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <div class="invoice-total">
+            <h2>Total:</h2>
+            <p id="invoice-total">₹ 0.00</p>
+        </div>
+        <div class="actions">
+            <button id="generate-invoice" class="btn btn-primary">Generate Invoice</button>
+            <button id="print-invoice" class="btn btn-secondary">Print Invoice</button>
+        </div>
     </div>
-    
+
+    <script>
+        // Function to format currency
+        function formatCurrency(value) {
+            return `₹ ${value.toFixed(2)}`;
+        }
+
+        // Function to calculate total cost based on hours and cost per hour
+        function calculateTotal(hours, costPerHour) {
+            return hours * costPerHour;
+        }
+
+        // Function to render invoice items
+        function renderInvoiceItems(hours, costPerHour) {
+            const tbody = document.getElementById('invoice-items-table').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+            const totalCost = calculateTotal(hours, costPerHour);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>Turf Service</td>
+                <td>High-quality turf service for ${hours} hours</td>
+                <td>${formatCurrency(costPerHour)}</td>
+                <td>${formatCurrency(totalCost)}</td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // Function to update the total amount
+        function updateInvoiceTotal() {
+            const hours = parseFloat(document.getElementById('turf-hours').value) || 0;
+            const costPerHour = parseFloat(document.getElementById('turf-cost-per-hour').value) || 0;
+            const total = calculateTotal(hours, costPerHour);
+            document.getElementById('invoice-total').innerText = formatCurrency(total);
+            renderInvoiceItems(hours, costPerHour);
+        }
+
+        // Event listener for generating the invoice
+        document.getElementById('generate-invoice').addEventListener('click', updateInvoiceTotal);
+
+        // Event listener for printing the invoice
+        document.getElementById('print-invoice').addEventListener('click', () => {
+            window.print();
+        });
+    </script>
 </body>
 </html>
