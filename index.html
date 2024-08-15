@@ -75,7 +75,7 @@
             background-color: #f7f0eb; /* Very light nude background for headers */
             color: #333;
         }
-        input.form-input {
+        input.form-input, select.form-select {
             border: 1px solid #e0d4c9; /* Light nude border */
             border-radius: 5px;
             padding: 8px;
@@ -83,7 +83,7 @@
             box-sizing: border-box;
             font-size: 16px;
         }
-        input[readonly] {
+        input[readonly], select[disabled] {
             background-color: #f5f3f1; /* Very light nude background */
         }
 
@@ -176,25 +176,27 @@
             <h2>Turf Details</h2>
             <table>
                 <tr>
+                    <th>Turf Selection:</th>
+                    <td>
+                        <select id="turf-selection" class="form-select">
+                            <option value="" disabled selected>Select a Turf</option>
+                            <option value="500" data-location="Location A">Turf A - Location A - ₹500/hour</option>
+                            <option value="700" data-location="Location B">Turf B - Location B - ₹700/hour</option>
+                            <option value="600" data-location="Location C">Turf C - Location C - ₹600/hour</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <th>Time:</th>
-                    <td><input type="time" id="turf-time" placeholder="Enter the time you want to get the turf" class="form-input"></td>
+                    <td><input type="time" id="turf-time" class="form-input"></td>
                 </tr>
                 <tr>
                     <th>Hours:</th>
-                    <td><input type="number" id="turf-hours" placeholder="Enter the number of hours you'll be there" class="form-input"></td>
+                    <td><input type="number" id="turf-hours" class="form-input"></td>
                 </tr>
                 <tr>
                     <th>Location:</th>
-                    <td><input type="text" id="turf-location" placeholder="Enter the location of the turf" class="form-input"></td>
-                </tr>
-            </table>
-        </div>
-        <div class="admin-info">
-            <h2>Admin Information</h2>
-            <table>
-                <tr>
-                    <th>Turf Cost per Hour:</th>
-                    <td><input type="number" id="turf-cost-per-hour" placeholder="Enter the cost per hour" class="form-input"></td>
+                    <td><input type="text" id="turf-location" class="form-input" readonly></td>
                 </tr>
             </table>
         </div>
@@ -248,23 +250,46 @@
                 <td>${formatCurrency(totalCost)}</td>
             `;
             tbody.appendChild(row);
+            return totalCost;
         }
 
-        // Function to update the total amount
-        function updateInvoiceTotal() {
+        // Function to update invoice details
+        function updateInvoice() {
+            const turfSelection = document.getElementById('turf-selection');
+            const selectedOption = turfSelection.options[turfSelection.selectedIndex];
+            const costPerHour = parseFloat(selectedOption.value);
+            const location = selectedOption.getAttribute('data-location');
+            
+            // Automatically fetch and update location based on the turf selection
+            document.getElementById('turf-location').value = location;
+            
             const hours = parseFloat(document.getElementById('turf-hours').value) || 0;
-            const costPerHour = parseFloat(document.getElementById('turf-cost-per-hour').value) || 0;
-            const total = calculateTotal(hours, costPerHour);
-            document.getElementById('invoice-total').innerText = formatCurrency(total);
-            renderInvoiceItems(hours, costPerHour);
+            const totalCost = renderInvoiceItems(hours, costPerHour);
+            document.getElementById('invoice-total').textContent = formatCurrency(totalCost);
         }
 
-        // Event listener for generating the invoice
-        document.getElementById('generate-invoice').addEventListener('click', updateInvoiceTotal);
+        // Event listener for generate invoice button
+        document.getElementById('generate-invoice').addEventListener('click', updateInvoice);
 
-        // Event listener for printing the invoice
-        document.getElementById('print-invoice').addEventListener('click', () => {
+        // Event listener for turf selection change
+        document.getElementById('turf-selection').addEventListener('change', updateInvoice);
+
+        // Event listener for hours input change
+        document.getElementById('turf-hours').addEventListener('input', function() {
+            const hours = parseFloat(this.value) || 0;
+            const costPerHour = parseFloat(document.getElementById('turf-selection').value) || 0;
+            const totalCost = renderInvoiceItems(hours, costPerHour);
+            document.getElementById('invoice-total').textContent = formatCurrency(totalCost);
+        });
+
+        // Event listener for print invoice button
+        document.getElementById('print-invoice').addEventListener('click', function() {
             window.print();
+        });
+
+        // Optional: Trigger update when page loads if a turf is pre-selected
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update on load if needed, currently does nothing as per instructions
         });
     </script>
 </body>
