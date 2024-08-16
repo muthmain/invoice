@@ -168,7 +168,7 @@
                 </tr>
                 <tr>
                     <th>Phone:</th>
-                    <td><input type="tel" id="customer-phone" value="1234567890" readonly class="form-input"></td>
+                    <td><input type="tel" id="customer-phone" value="1234567890" class="form-input"></td>
                 </tr>
             </table>
         </div>
@@ -176,27 +176,12 @@
             <h2>Turf Details</h2>
             <table>
                 <tr>
-                    <th>Turf Selection:</th>
-                    <td>
-                        <select id="turf-selection" class="form-select">
-                            <option value="" disabled selected>Select a Turf</option>
-                            <option value="500" data-location="Location A">Turf A - Location A - ₹500/hour</option>
-                            <option value="700" data-location="Location B">Turf B - Location B - ₹700/hour</option>
-                            <option value="600" data-location="Location C">Turf C - Location C - ₹600/hour</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
                     <th>Time:</th>
                     <td><input type="time" id="turf-time" class="form-input"></td>
                 </tr>
                 <tr>
                     <th>Hours:</th>
                     <td><input type="number" id="turf-hours" class="form-input"></td>
-                </tr>
-                <tr>
-                    <th>Location:</th>
-                    <td><input type="text" id="turf-location" class="form-input" readonly></td>
                 </tr>
             </table>
         </div>
@@ -255,14 +240,8 @@
 
         // Function to update invoice details
         function updateInvoice() {
-            const turfSelection = document.getElementById('turf-selection');
-            const selectedOption = turfSelection.options[turfSelection.selectedIndex];
-            const costPerHour = parseFloat(selectedOption.value);
-            const location = selectedOption.getAttribute('data-location');
-            
-            // Automatically fetch and update location based on the turf selection
-            document.getElementById('turf-location').value = location;
-            
+            // Hardcoding the cost per hour for demonstration purposes
+            const costPerHour = 500; // Replace with dynamic value if needed
             const hours = parseFloat(document.getElementById('turf-hours').value) || 0;
             const totalCost = renderInvoiceItems(hours, costPerHour);
             document.getElementById('invoice-total').textContent = formatCurrency(totalCost);
@@ -271,13 +250,10 @@
         // Event listener for generate invoice button
         document.getElementById('generate-invoice').addEventListener('click', updateInvoice);
 
-        // Event listener for turf selection change
-        document.getElementById('turf-selection').addEventListener('change', updateInvoice);
-
         // Event listener for hours input change
         document.getElementById('turf-hours').addEventListener('input', function() {
             const hours = parseFloat(this.value) || 0;
-            const costPerHour = parseFloat(document.getElementById('turf-selection').value) || 0;
+            const costPerHour = 500; // Replace with dynamic value if needed
             const totalCost = renderInvoiceItems(hours, costPerHour);
             document.getElementById('invoice-total').textContent = formatCurrency(totalCost);
         });
