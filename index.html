@@ -160,15 +160,19 @@
             <table>
                 <tr>
                     <th>Name:</th>
-                    <td><input type="text" id="customer-name" value="muthmain banu" readonly class="form-input"></td>
+                    <td><input type="text" id="customer-name" readonly class="form-input"></td>
                 </tr>
                 <tr>
                     <th>Email:</th>
-                    <td><input type="email" id="customer-email" value="muthmain@example.com" readonly class="form-input"></td>
+                    <td><input type="email" id="customer-email" readonly class="form-input"></td>
                 </tr>
                 <tr>
                     <th>Phone:</th>
-                    <td><input type="tel" id="customer-phone" value="1234567890" class="form-input"></td>
+                    <td><input type="tel" id="customer-phone"  class="form-input"></td>
+                </tr>
+                <tr>
+                    <th>Location:</th>
+                    <td><input type="text" id="location" readonly class="form-input"></td>
                 </tr>
             </table>
         </div>
@@ -212,6 +216,49 @@
     </div>
 
     <script>
+        // Example user data that would normally come from a backend API
+        const loggedInUser = {
+            name: "Muthmain Banu",
+            email: "muthmain@example.com",
+            phone: "1234567890"
+        };
+
+        // Function to populate customer details from the logged-in user
+        function populateCustomerDetails() {
+            document.getElementById('customer-name').value = loggedInUser.name;
+            document.getElementById('customer-email').value = loggedInUser.email;
+            document.getElementById('customer-phone').value = loggedInUser.phone;
+        }
+
+        // Example mapping of turf to location
+        const turfLocations = {
+            "turf1": "Location A",
+            "turf2": "Location B",
+            "turf3": "Location C"
+        };
+
+        // Function to get URL parameter
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Set the location based on the selected turf
+        function setLocation() {
+            const selectedTurf = getURLParameter('turf');
+            const locationInput = document.getElementById('location');
+
+            // Set the location based on the selected turf
+            if (selectedTurf && turfLocations[selectedTurf]) {
+                locationInput.value = turfLocations[selectedTurf];
+            } else {
+                locationInput.value = "Unknown Location"; // Fallback for unexpected values
+            }
+
+            // Disable editing the location
+            locationInput.readOnly = true; 
+        }
+
         // Function to format currency
         function formatCurrency(value) {
             return `₹ ${value.toFixed(2)}`;
@@ -240,8 +287,7 @@
 
         // Function to update invoice details
         function updateInvoice() {
-            // Hardcoding the cost per hour for demonstration purposes
-            const costPerHour = 500; // Replace with dynamic value if needed
+            const costPerHour = 500; // Example cost per hour
             const hours = parseFloat(document.getElementById('turf-hours').value) || 0;
             const totalCost = renderInvoiceItems(hours, costPerHour);
             document.getElementById('invoice-total').textContent = formatCurrency(totalCost);
@@ -253,7 +299,7 @@
         // Event listener for hours input change
         document.getElementById('turf-hours').addEventListener('input', function() {
             const hours = parseFloat(this.value) || 0;
-            const costPerHour = 500; // Replace with dynamic value if needed
+            const costPerHour = 500; // Example cost per hour
             const totalCost = renderInvoiceItems(hours, costPerHour);
             document.getElementById('invoice-total').textContent = formatCurrency(totalCost);
         });
@@ -263,10 +309,12 @@
             window.print();
         });
 
-        // Optional: Trigger update when page loads if a turf is pre-selected
-        document.addEventListener('DOMContentLoaded', function() {
-            // Update on load if needed, currently does nothing as per instructions
-        });
+        // Call the functions on page load
+        window.onload = function() {
+            populateCustomerDetails();
+            setLocation();
+        };
     </script>
+
 </body>
 </html>
